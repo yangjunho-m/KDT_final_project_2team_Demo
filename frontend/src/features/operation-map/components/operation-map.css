@@ -1,0 +1,592 @@
+.map-placeholder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  /* 밝은 회백색 도시 지도 바탕 (블록/도로/수역/녹지는 SVG geo 레이어).
+     블록 사이 간격이 도로처럼 보이도록 바탕을 매우 옅은 회백색으로 둔다. */
+  background-color: #f1f2f5;
+  /* 관제용 좌표 격자 (매우 옅은 회청색) */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgb(37 60 100 / 5%) 0 1px,
+      transparent 1px,
+      transparent 96px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgb(37 60 100 / 5%) 0 1px,
+      transparent 1px,
+      transparent 96px
+    );
+}
+
+/* 시뮬레이션 지형 레이어 (블록/수역/녹지/도로) */
+.map-placeholder__geo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 도시 블록 텍스처 — 채도 낮은 회색, 사이 간격이 도로망이 된다 */
+.map-placeholder__geo pattern rect {
+  fill: rgb(23 32 51 / 7%);
+}
+
+.map-placeholder__geo .geo-blocks {
+  fill: url(#op-city-blocks);
+}
+
+.map-placeholder--satellite .map-placeholder__geo pattern rect {
+  fill: rgb(21 128 61 / 11%);
+}
+
+/* 낮은 채도의 연청색 수역 */
+.map-placeholder__geo .geo-water {
+  fill: rgb(150 190 218 / 60%);
+}
+
+/* 낮은 채도의 연녹색 녹지 */
+.map-placeholder__geo .geo-green {
+  fill: rgb(150 186 150 / 45%);
+}
+
+.map-placeholder__geo .geo-road {
+  stroke: #ffffff;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.map-placeholder__geo .geo-road--major {
+  stroke-width: 4;
+  opacity: 0.95;
+}
+
+.map-placeholder__geo .geo-road--minor {
+  stroke-width: 2;
+  opacity: 0.8;
+}
+
+.map-placeholder__geo .geo-zone {
+  fill: none;
+  stroke: rgb(37 99 235 / 26%);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.map-placeholder__geo .geo-bridge {
+  stroke: #f4f6f8;
+  stroke-width: 2.5;
+  opacity: 0.9;
+}
+
+.map-placeholder__note {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 82%);
+  border: 1px solid var(--color-border);
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.map-placeholder__stage {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* 줌 대상 캔버스: 지도 배경 + 전술 마커를 함께 확대/축소한다.
+   컨트롤·안내 배지는 이 캔버스 바깥에 위치해 확대되지 않는다. */
+.map-placeholder__canvas {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+  transition: transform 0.15s ease;
+}
+
+.map-placeholder__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+/* 작전지역 반경 링 (레이어 켜졌을 때만) */
+.map-placeholder__radius {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 230px;
+  height: 230px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px dashed rgb(220 38 38 / 55%);
+  background: rgb(220 38 38 / 8%);
+  z-index: 1;
+}
+
+/* 작전지역 중심 크로스헤어 마커 */
+.map-placeholder__crosshair {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--color-danger);
+  background: radial-gradient(
+    circle,
+    var(--color-danger) 0 3px,
+    rgb(220 38 38 / 16%) 4px
+  );
+}
+
+.map-placeholder__crosshair::before,
+.map-placeholder__crosshair::after {
+  content: "";
+  position: absolute;
+  background: var(--color-danger);
+}
+
+.map-placeholder__crosshair::before {
+  left: 50%;
+  top: -7px;
+  width: 2px;
+  height: 40px;
+  transform: translateX(-50%);
+}
+
+.map-placeholder__crosshair::after {
+  top: 50%;
+  left: -7px;
+  height: 2px;
+  width: 40px;
+  transform: translateY(-50%);
+}
+
+.map-placeholder__center-label {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-danger);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.map-placeholder__marker {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 이동 경로 (예정 = 연한 점선, 지나온 = 진한 실선) */
+.flight-paths {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.flight-path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.flight-path--planned {
+  stroke: rgb(37 99 235 / 42%);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.flight-path--traveled {
+  stroke: var(--color-primary);
+  stroke-width: 2.5;
+}
+
+/* 목적지 마커 */
+.flight-dest {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.flight-dest__ring {
+  width: 16px;
+  height: 16px;
+  border: 2px dashed var(--color-primary);
+  border-radius: 50%;
+  background: rgb(37 99 235 / 14%);
+}
+
+.flight-dest__label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--color-primary-strong);
+  background: rgb(255 255 255 / 88%);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.map-placeholder__marker.is-flying .map-placeholder__marker-icon {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgb(37 99 235 / 35%);
+}
+
+.map-placeholder--satellite {
+  background-color: #dfe8e3;
+  background-image: linear-gradient(135deg, rgb(21 128 61 / 10%), transparent);
+}
+
+.map-placeholder__marker-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 90%);
+  border: 1px solid var(--color-border);
+}
+
+.map-placeholder__marker-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: rgb(255 255 255 / 85%);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.map-placeholder__marker.is-selected .map-placeholder__marker-icon,
+.map-placeholder__target.is-selected .map-placeholder__target-dot {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.map-placeholder__target {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.map-placeholder__target-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-danger);
+  border: 3px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 드론 정보 팝업 (마커 앵커, 마커 위로 표시) */
+.drone-popup {
+  position: absolute;
+  z-index: 20;
+  width: 208px;
+  transform: translate(-50%, calc(-100% - 16px));
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: rgb(255 255 255 / 97%);
+  box-shadow: var(--shadow-modal);
+}
+
+/* 우측 마커는 팝업을 왼쪽으로 열어 화면 안쪽 유지 */
+.drone-popup--left {
+  transform: translate(-82%, calc(-100% - 16px));
+}
+
+.drone-popup__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: move;
+}
+
+.drone-popup__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.drone-popup__actions > * {
+  flex: 1 1 0;
+}
+
+.drone-popup__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drone-popup__close {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.drone-popup__close:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.drone-popup__meta {
+  margin: 4px 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.drone-popup__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+  margin: 0;
+}
+
+.drone-popup__stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.drone-popup__stat--wide {
+  grid-column: 1 / -1;
+}
+
+.drone-popup__stat dt {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-text-subtle);
+}
+
+.drone-popup__stat dd {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.drone-popup__mono {
+  font-family: var(--font-mono);
+}
+
+/* 시나리오 실행 중 좌표 비교 · AI 추정 블록 */
+.drone-popup__metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0;
+  padding-top: 8px;
+  border-top: 1px dashed var(--color-border-strong);
+}
+
+.drone-popup__metrics-title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--color-ai, #7c3aed);
+}
+
+.map-placeholder__footer {
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--color-border);
+  background: rgb(255 255 255 / 75%);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+/* ===== 운용 개요 미니맵 (시각 전용) ===== */
+.mini-map {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  background-color: var(--color-map-land);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      var(--color-map-grid) 0 1px,
+      transparent 1px,
+      transparent 30px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--color-map-grid) 0 1px,
+      transparent 1px,
+      transparent 30px
+    );
+}
+
+/* 가로형 비율 (시안과 유사) */
+.mini-map__stage {
+  position: relative;
+  height: 208px;
+}
+
+.mini-map__radius {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 92px;
+  height: 92px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgb(220 38 38 / 55%);
+  background: rgb(220 38 38 / 8%);
+}
+
+.mini-map__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  z-index: 2;
+}
+
+.mini-map__center-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--color-danger);
+  background: radial-gradient(
+    circle,
+    var(--color-danger) 0 2px,
+    rgb(220 38 38 / 20%) 3px
+  );
+}
+
+.mini-map__center-label {
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-danger);
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.mini-map__scenario-radius {
+  position: absolute;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgb(79 70 229 / 60%);
+  border-radius: 50%;
+  background: rgb(79 70 229 / 12%);
+}
+
+.mini-map__scenario-radius--spoofing {
+  border-color: rgb(245 158 11 / 70%);
+  background: rgb(245 158 11 / 14%);
+}
+
+.mini-map__scenario-center,
+.mini-map__spoof-target {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.mini-map__scenario-center {
+  border: 2px solid rgb(79 70 229);
+  background: white;
+}
+
+.mini-map__spoof-target {
+  border: 2px solid rgb(245 158 11);
+  background: rgb(254 243 199);
+  box-shadow: 0 0 0 4px rgb(245 158 11 / 18%);
+}
+
+.mini-map__drone {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 2px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.mini-map__target {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--color-danger);
+  border: 2px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.mini-map__footer {
+  padding: 6px var(--space-2);
+  border-top: 1px solid var(--color-border);
+  background: rgb(255 255 255 / 75%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,155 @@
+.area-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.area-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px var(--space-3);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.area-card.is-active {
+  border-left-color: var(--color-primary);
+}
+
+.area-card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.area-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.area-card__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.area-card__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.area-card__state-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.area-card__state-dot--on {
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px var(--color-success-soft);
+}
+
+.area-card__state-dot--off {
+  background: var(--color-text-subtle);
+}
+
+.area-card__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.area-card__metric {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px;
+  background: var(--color-surface-muted);
+}
+
+.area-card__metric-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-text-subtle);
+}
+
+.area-card__metric-value {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.area-card__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.area-card__actions .ui-btn {
+  width: 100%;
+}
+
+.area-card__subactions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.area-card__link {
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.area-card__link:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.area-card__link--danger {
+  color: var(--color-danger);
+}
+
+.area-card__link--danger:hover {
+  color: var(--color-danger-strong);
+}
+
+.area-card__link-sep {
+  color: var(--color-border-strong);
+}
+
+/* ===== 적진 좌표 입력 폼 ===== */
+.area-create-form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.area-create-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.area-create-form__actions {
+  display: flex;
+  justify-content: flex-end;
+}

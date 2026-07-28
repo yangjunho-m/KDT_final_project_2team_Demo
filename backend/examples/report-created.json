@@ -1,0 +1,13 @@
+{
+  "eventId": "EVT-060",
+  "sequence": 60,
+  "eventType": "report.created",
+  "timestamp": "2026-06-30T10:31:00Z",
+  "payload": {
+    "id": "RPT-001",
+    "title": "의심 표적 발견",
+    "status": "NEW",
+    "important": true,
+    "createdAt": "2026-06-30T10:31:00Z"
+  }
+}

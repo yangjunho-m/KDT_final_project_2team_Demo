@@ -1,0 +1,275 @@
+.command-report-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 20fr) minmax(0, 47fr) minmax(0, 28fr);
+  gap: var(--space-3);
+  align-items: stretch;
+  height: calc(100vh - 116px);
+}
+
+.command-report-panel {
+  min-height: 0;
+  max-height: 100%;
+}
+
+/* ===== 헤더 상태 클러스터 (항목별 간격/구분선 개선) ===== */
+.app-header__status--spaced {
+  gap: var(--space-4);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.app-header__status--spaced .app-header__status-item {
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.app-header__status--spaced .app-header__status-divider {
+  height: 22px;
+  background: var(--color-border-strong);
+}
+
+.app-header__status-item--clock .app-header__status-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== 좌측 컬럼 (NAV + 최근 보고 목록) ===== */
+.cr-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 0;
+  max-height: 100%;
+}
+
+.cr-nav-panel {
+  flex: 0 0 auto;
+}
+
+.cr-recent-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.cr-nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2);
+  gap: 2px;
+}
+
+.cr-nav__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cr-nav__item:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.cr-nav__item.is-active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+  font-weight: 700;
+}
+
+.cr-nav__item.is-disabled {
+  color: var(--color-text-subtle);
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.cr-nav__item.is-disabled:hover {
+  background: transparent;
+  color: var(--color-text-subtle);
+}
+
+.cr-nav__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cr-nav__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cr-recent__count {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--color-text-subtle);
+}
+
+.cr-recent__empty {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.cr-recent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cr-recent__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.cr-recent__row:hover {
+  border-color: var(--color-border-strong);
+}
+
+.cr-recent__row.is-important {
+  border-left-color: var(--color-danger);
+}
+
+.cr-recent__row.is-selected {
+  border-color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.cr-recent__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.cr-recent__time {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-subtle);
+}
+
+.cr-recent__title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cr-recent__ref {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.cr-recent__id {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-primary-strong);
+}
+
+.cr-recent__target {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== 우측 작전지역 현황 패널: 저장된 목록만 내부 스크롤 ===== */
+.cr-area-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.cr-area-body .area-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* 스크롤바가 카드 위를 가리지 않도록 우측 여백 확보 */
+  padding-right: 8px;
+}
+
+/* ===== 중앙 툴바 ===== */
+.cr-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.cr-toolbar .seg-tabs {
+  flex: 0 1 auto;
+  margin-bottom: 0;
+}
+
+.cr-toolbar .seg-tab {
+  flex: 0 0 auto;
+}
+
+.cr-sort {
+  flex-shrink: 0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-text-subtle);
+}
+
+.cr-guard-message,
+.cr-area-status {
+  margin: var(--space-2) 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.cr-area-status--error {
+  background: var(--color-danger-soft);
+  color: var(--color-danger-strong);
+}
+
+@media (max-width: 1200px) {
+  .command-report-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .command-report-panel {
+    max-height: none;
+  }
+
+  .cr-left {
+    max-height: none;
+  }
+}

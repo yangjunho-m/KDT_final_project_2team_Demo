@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-multipart
+httpx
+pydantic
+
+# Optional local providers
+opencv-python
+sentence-transformers
+ultralytics
+llama-cpp-python

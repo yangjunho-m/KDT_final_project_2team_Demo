@@ -1,0 +1,113 @@
+/* 드론뷰 독립 창 — window.open으로 열리는 단독 페이지 */
+.drone-window {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 100vh;
+  padding: var(--space-4);
+  background: var(--color-bg);
+}
+
+.drone-window__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.drone-window__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.drone-window__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.drone-window__subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-subtle);
+}
+
+.drone-window__screen {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+/* 원본(256×256)을 letterbox(contain)로 끼워 넣으면 창 비율과 안 맞아 위아래에
+   검은 여백이 크게 남는다 — LIVE 화면다운 몰입감을 위해 프레임 전체를 채우고,
+   원본과 창의 비율 차이만큼만(정사각형↔직사각형) 최소한으로 잘라낸다.
+   width/height:100%는 상위 .drone-window가 min-height만 갖고(고정 height 아님)
+   플렉스 높이가 불확실해 img(교체 요소)의 내재 비율로 새는 경우가 있었다 —
+   position:absolute + inset:0으로 부모(.drone-window__screen, position:relative)를
+   그대로 꽉 채우도록 확실하게 고정한다. */
+.drone-window__image {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+.drone-window__live {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #f87171;
+  background: rgb(15 23 42 / 80%);
+  padding: 4px 11px;
+  border-radius: 999px;
+}
+
+.drone-window__meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2) var(--space-3);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.drone-window__meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.drone-window__meta dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-text-subtle);
+}
+
+.drone-window__meta dd {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.drone-window__mono {
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 640px) {
+  .drone-window__meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

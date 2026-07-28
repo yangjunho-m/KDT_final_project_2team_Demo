@@ -1,0 +1,147 @@
+.login-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-6) var(--space-5);
+  overflow: hidden;
+  background:
+    repeating-radial-gradient(
+      circle at 50% 44%,
+      rgb(37 99 235 / 4%) 0,
+      rgb(37 99 235 / 4%) 1px,
+      transparent 1px,
+      transparent 84px
+    ),
+    radial-gradient(1100px 620px at 50% -6%, #e8f0fb 0%, transparent 68%),
+    var(--color-bg);
+}
+
+.login-topbar {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.login-topbar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.login-topbar__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.login-topbar__subtitle {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-text-subtle);
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 464px);
+  padding: 36px 40px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+  box-shadow:
+    0 0 0 1px rgb(37 99 235 / 6%),
+    0 18px 44px rgb(23 32 51 / 10%);
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.login-brand__title {
+  margin-top: var(--space-1);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.login-brand__subtitle {
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login-input__icon {
+  position: absolute;
+  left: 12px;
+  display: inline-flex;
+  color: var(--color-text-subtle);
+  pointer-events: none;
+}
+
+.login-input__control {
+  padding-left: 40px;
+  height: 48px;
+}
+
+/* 로그인 버튼: 시안처럼 크고 높은 주요 액션 */
+.login-submit {
+  margin-top: var(--space-2);
+  height: 52px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.login-error {
+  margin: 0;
+  color: var(--color-danger-strong);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 28px;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--color-text-subtle);
+}
+
+@media (max-width: 640px) {
+  .login-topbar {
+    display: none;
+  }
+}

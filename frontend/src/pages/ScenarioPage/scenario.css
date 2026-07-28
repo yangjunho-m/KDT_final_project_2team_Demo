@@ -1,0 +1,390 @@
+/* /scenario — 전체 스크롤 없이 한 화면에 맞추는 3열 시뮬레이터 셸 */
+.scenario-page-root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scenario-body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.scenario-grid {
+  display: grid;
+  /* 좌 22% · 중앙 54% · 우 24% */
+  grid-template-columns: 22fr 54fr 24fr;
+  gap: var(--space-3);
+  height: 100%;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.scenario-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 중앙 컬럼: 템플릿 패널 추가로 패널 총 높이가 화면보다 커질 수 있다 — 전체 페이지는
+   스크롤하지 않지만(scenario-body), 이 컬럼만 내부 스크롤해 겹침 없이 다 보이게 한다. */
+.scenario-col--center {
+  overflow-y: auto;
+}
+
+/* ── 좌측: 배정 드론 현황 ── */
+.scenario-drone-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scenario-drone-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.scenario-drone-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.scenario-drone-row__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.scenario-drone-row__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.scenario-drone-row__tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary-strong);
+}
+
+.scenario-note {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* ── 중앙: 템플릿·유형·설정 패널은 축소 금지 (지도만 신축, 넘치면 컬럼이 스크롤) ── */
+.scenario-template-panel,
+.scenario-type-panel,
+.scenario-config-panel {
+  flex-shrink: 0;
+}
+
+.scenario-config-panel--jamming {
+  border-left: 3px solid var(--color-danger);
+}
+.scenario-config-panel--spoofing {
+  border-left: 3px solid var(--color-ai);
+}
+
+.scenario-config-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+/* 시나리오 템플릿 패널: 선택/불러오기/삭제 한 줄 + 새 템플릿 저장 폼 */
+.scenario-template-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.scenario-template-row .ui-field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.scenario-template-save {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border-strong);
+}
+
+.scenario-template-save .ui-field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.scenario-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.scenario-field__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.scenario-segment {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.scenario-segment__btn {
+  flex: 1 1 0;
+  padding: 9px 6px;
+  border: 0;
+  border-left: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.scenario-segment__btn:first-child {
+  border-left: 0;
+}
+
+.scenario-segment__btn:hover:not(.is-active) {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.scenario-segment__btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.scenario-segment--jamming .scenario-segment__btn.is-active {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.scenario-segment--spoofing .scenario-segment__btn.is-active {
+  background: var(--color-ai);
+  color: #fff;
+}
+
+/* 스푸핑: 허위 좌표 표시 + 짧은 안내 */
+.scenario-spoofpos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px dashed var(--color-ai);
+  border-radius: var(--radius-sm);
+  background: var(--color-ai-soft);
+}
+
+.scenario-spoofpos__value {
+  flex: 1 1 auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-ai);
+}
+
+.scenario-spoofpos__reset {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border: 1px solid var(--color-ai);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-ai);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scenario-spoofpos__empty {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+}
+
+.scenario-mode-desc {
+  margin: var(--space-3) 0 0;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.scenario-mode-desc__sub {
+  color: var(--color-text-subtle);
+}
+
+/* ── 중앙: 교란 구역 지도 패널 (가장 넓게) ── */
+.scenario-zone-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.scenario-zone-panel > .ui-panel__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+
+/* 반경 컨트롤 (패널 헤더) */
+.scenario-radius {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scenario-radius__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.scenario-radius__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.scenario-radius__btn:not(:disabled):hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-strong);
+}
+
+.scenario-radius__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.scenario-radius__input {
+  width: 66px;
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.scenario-radius__unit {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+}
+
+/* ── 우측: 요약 / 적용 ── */
+.scenario-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.scenario-summary__type--jamming {
+  color: var(--color-danger);
+  font-weight: 800;
+}
+
+.scenario-summary__type--spoofing {
+  color: var(--color-ai);
+  font-weight: 800;
+}
+
+.scenario-apply {
+  margin-top: var(--space-4);
+}
+
+.scenario-apply__reason {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: var(--space-2) 0 0;
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+}
+
+.scenario-apply__message {
+  margin: var(--space-2) 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.scenario-apply__message--success {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.scenario-apply__message--error {
+  background: var(--color-danger-soft);
+  color: var(--color-danger-strong);
+}
+
+.scenario-readiness-panel {
+  flex-shrink: 0;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 1440px) {
+  .scenario-config-row {
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 1120px) {
+  .scenario-page-root {
+    height: auto;
+    overflow: visible;
+  }
+  .scenario-body {
+    overflow: visible;
+  }
+  .scenario-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .scenario-zone-panel {
+    min-height: 420px;
+  }
+}
+
+.scenario-target-message {
+  margin: 8px 12px 12px;
+}

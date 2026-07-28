@@ -1,0 +1,17 @@
+{
+  "eventId": "EVT-030",
+  "sequence": 30,
+  "eventType": "inference.completed",
+  "timestamp": "2026-06-30T10:30:12Z",
+  "payload": {
+    "jobId": "INF-001",
+    "status": "COMPLETED",
+    "estimatedPosition": {
+      "latitude": 37.5654,
+      "longitude": 126.9761,
+      "altitude": 116
+    },
+    "confidence": 0.86,
+    "modelVersion": "demo-adapter-v1"
+  }
+}

@@ -1,0 +1,176 @@
+/* 페이지 공통 레이아웃 - 밝은 관제(Control Room) 화면 셸 */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* 화면 전체 스크롤 없이 viewport에 고정 — 내부 패널이 각자 스크롤한다 */
+.page--viewport {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.page--viewport > .app-header {
+  flex: 0 0 auto;
+}
+
+.page--viewport > .page-body {
+  overflow: hidden;
+}
+
+/* ===== 상단 헤더 ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.app-header__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.app-header__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.app-header__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+}
+
+/* 헤더 중앙 상태 클러스터 */
+.app-header__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: 6px var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+}
+
+.app-header__status-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.app-header__status-label {
+  color: var(--color-text-subtle);
+  font-weight: 600;
+}
+
+.app-header__status-value {
+  font-weight: 700;
+}
+
+.app-header__status-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--color-border-strong);
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.app-header__area-select {
+  min-width: 190px;
+}
+
+.app-header__template-select {
+  min-width: 170px;
+}
+
+/* 헤더 버튼(시나리오 적용/중지 등) 결과를 잠깐 보여주는 배너 — title 툴팁만으로는
+   눈에 띄지 않아 함께 노출한다. 6초 후 자동으로 사라진다(호출부 참고). */
+.app-header__toast {
+  position: absolute;
+  top: 100%;
+  right: var(--space-5);
+  z-index: 9;
+  margin: 6px 0 0;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-surface);
+  font-size: 0.76rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-panel);
+}
+
+.app-header__buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* ===== 본문 ===== */
+.page-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--space-3) var(--space-4);
+}
+
+.scroll-body {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: var(--space-3);
+  }
+
+  .app-header__status {
+    display: none;
+  }
+
+  .page-body {
+    padding: var(--space-3);
+  }
+}

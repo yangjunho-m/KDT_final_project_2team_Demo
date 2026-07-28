@@ -1,0 +1,12 @@
+{
+  "eventId": "EVT-020",
+  "sequence": 20,
+  "eventType": "inference.queued",
+  "timestamp": "2026-06-30T10:30:05Z",
+  "payload": {
+    "id": "INF-001",
+    "droneId": "DRN-002",
+    "status": "QUEUED",
+    "modelMode": "DEMO"
+  }
+}

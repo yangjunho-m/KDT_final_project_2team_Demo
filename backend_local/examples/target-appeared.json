@@ -1,0 +1,17 @@
+{
+  "eventId": "EVT-040",
+  "sequence": 40,
+  "eventType": "target.appeared",
+  "timestamp": "2026-06-30T10:30:20Z",
+  "payload": {
+    "id": "TGT-001",
+    "name": "이동 표적 A",
+    "status": "ACTIVE",
+    "position": {
+      "latitude": 37.568,
+      "longitude": 126.9811,
+      "altitude": null
+    },
+    "severity": "WARNING"
+  }
+}

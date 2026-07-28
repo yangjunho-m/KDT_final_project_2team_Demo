@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "data": {
+    "items": [
+      {
+        "id": "DRN-001",
+        "name": "Alpha-1",
+        "isActive": true
+      },
+      {
+        "id": "DRN-002",
+        "name": "Bravo-2",
+        "isActive": true
+      }
+    ]
+  },
+  "message": "요청이 성공했습니다."
+}

@@ -1,0 +1,70 @@
+# 환경변수와 로컬 비밀값
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Python
+.venv/
+venv/
+**/.venv/
+**/venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# JavaScript / 프론트엔드 빌드
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+*.tsbuildinfo
+
+# 로그와 실행 중 생성 파일
+*.log
+*.pid
+*.tmp
+*.cache
+uploads/
+**/uploads/
+backend_local/local-data/
+backend_local/local-storage/
+backend_local/storage/
+backend/storage/faiss/
+
+# 데이터베이스와 벡터 인덱스
+*.db
+*.sqlite
+*.sqlite3
+*.faiss
+
+# 모델, 학습 결과, 대용량 아카이브
+*.pt
+*.pth
+*.pkl
+*.onnx
+*.ckpt
+*.safetensors
+*.gguf
+*.zip
+*.tar
+*.tar.gz
+*.7z
+data/raw/
+data/processed/
+ml/runs/
+
+# 노트북과 도구 캐시
+.ipynb_checkpoints/
+.idea/
+.vscode/
+
+# 운영체제 파일
+.DS_Store
+Thumbs.db

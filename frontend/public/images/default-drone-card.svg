@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180" role="img" aria-label="기본 드론 카드 이미지">
+  <rect width="320" height="180" rx="10" fill="#eef2f7" />
+  <rect x="0.5" y="0.5" width="319" height="179" rx="9.5" fill="none" stroke="#d9e2ec" />
+  <g transform="translate(160 88)" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round">
+    <circle cx="-34" cy="-20" r="11" />
+    <circle cx="34" cy="-20" r="11" />
+    <circle cx="-34" cy="20" r="11" />
+    <circle cx="34" cy="20" r="11" />
+    <line x1="-26" y1="-12" x2="26" y2="12" />
+    <line x1="26" y1="-12" x2="-26" y2="12" />
+    <rect x="-12" y="-12" width="24" height="24" rx="5" fill="#cbd5e1" stroke="none" />
+  </g>
+  <text x="160" y="150" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#8a97ab">기본 드론 이미지</text>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "eventId": "EVT-031",
+  "sequence": 31,
+  "eventType": "inference.failed",
+  "timestamp": "2026-06-30T10:30:12Z",
+  "payload": {
+    "jobId": "INF-002",
+    "status": "FAILED",
+    "estimatedPosition": null,
+    "confidence": null,
+    "errorCode": "MODEL_UNAVAILABLE"
+  }
+}

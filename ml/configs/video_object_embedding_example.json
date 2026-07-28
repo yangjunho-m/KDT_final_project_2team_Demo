@@ -1,0 +1,13 @@
+{
+  "video_path": "data\\raw\\dog_shorts.mp4",
+  "output_dir": "data/processed/video_embeddings",
+  "detector_model": "yolov8n.pt",
+  "tracker_config": "bytetrack.yaml",
+  "clip_model": "ViT-B-32",
+  "clip_pretrained": "openai",
+  "device": "auto",
+  "frame_sample_seconds": 0.3,
+  "confidence_threshold": 0.25,
+  "save_frames": true,
+  "save_crops": true
+}

@@ -1,0 +1,31 @@
+{
+  "droneId": "DRN-003",
+  "plannedPosition": {
+    "latitude": 37.564,
+    "longitude": 126.974,
+    "altitude": 110
+  },
+  "actualPosition": {
+    "latitude": 37.5634,
+    "longitude": 126.9732,
+    "altitude": 109
+  },
+  "reportedGnssPosition": {
+    "latitude": 37.5672,
+    "longitude": 126.9798,
+    "altitude": 110
+  },
+  "crossViewPosition": {
+    "latitude": 37.5635,
+    "longitude": 126.9733,
+    "altitude": 109
+  },
+  "gnssStatus": "SPOOFED",
+  "insStatus": "DRIFTING",
+  "routeStatus": "DEVIATING",
+  "batteryPercent": 71,
+  "satelliteCount": 10,
+  "speedMps": 9.8,
+  "headingDeg": 103,
+  "updatedAt": "2026-06-30T10:30:00Z"
+}

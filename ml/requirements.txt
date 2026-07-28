@@ -1,0 +1,12 @@
+numpy
+opencv-python
+Pillow
+torch
+open_clip_torch
+ultralytics
+tqdm
+moviepy
+-q -U google-genai
+transformers
+accelerate
+qwen-vl-utils

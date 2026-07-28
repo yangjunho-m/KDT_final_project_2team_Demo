@@ -1,0 +1,38 @@
+{
+  "success": true,
+  "data": {
+    "items": [
+      {
+        "id": "RPT-001",
+        "title": "의심 표적 발견",
+        "summary": "작전구역 북동쪽에서 이동 표적이 감지되었습니다.",
+        "status": "NEW",
+        "important": true,
+        "createdBy": "USR-001",
+        "droneId": "DRN-001",
+        "targetId": "TGT-001",
+        "position": {
+          "latitude": 37.568,
+          "longitude": 126.9811,
+          "altitude": 0
+        },
+        "createdAt": "2026-06-30T10:30:00Z",
+        "attachments": [
+          {
+            "id": "ATT-001",
+            "fileName": "target-preview.jpg",
+            "contentType": "image/jpeg",
+            "objectKey": "reports/RPT-001/target-preview.jpg",
+            "thumbnailUrl": "/api/reports/RPT-001/attachments/ATT-001/url?type=thumbnail"
+          }
+        ]
+      }
+    ],
+    "page": {
+      "page": 1,
+      "size": 20,
+      "total": 1
+    }
+  },
+  "message": "요청이 성공했습니다."
+}

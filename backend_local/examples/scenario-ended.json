@@ -1,0 +1,11 @@
+{
+  "eventId": "EVT-050",
+  "sequence": 50,
+  "eventType": "scenario.ended",
+  "timestamp": "2026-06-30T10:32:00Z",
+  "payload": {
+    "id": "SCN-SESSION-001",
+    "status": "ENDED",
+    "endedAt": "2026-06-30T10:32:00Z"
+  }
+}

@@ -1,0 +1,552 @@
+/* ── 시나리오 유형 카드 (재밍 / 스푸핑) ── */
+.scenario-type-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.scenario-type-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.scenario-type-card:hover:not(.is-selected) {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.scenario-type-card:focus-visible {
+  outline: 2px solid var(--tone-color, var(--color-primary));
+  outline-offset: 2px;
+}
+
+.scenario-type-card--jamming {
+  --tone-color: var(--color-danger);
+  --tone-soft: var(--color-danger-soft);
+}
+
+.scenario-type-card--spoofing {
+  --tone-color: var(--color-ai);
+  --tone-soft: var(--color-ai-soft);
+}
+
+.scenario-type-card.is-selected {
+  border-color: var(--tone-color);
+  background: var(--tone-soft);
+  box-shadow: inset 0 0 0 1px var(--tone-color);
+}
+
+.scenario-type-card__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--tone-soft);
+  color: var(--tone-color);
+}
+
+.scenario-type-card__glyph {
+  display: inline-flex;
+}
+
+.scenario-type-card__glyph svg {
+  width: 26px;
+  height: 26px;
+}
+
+.scenario-type-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.scenario-type-card__name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.scenario-type-card__desc {
+  font-size: 0.76rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.scenario-type-card__check {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.scenario-type-card.is-selected .scenario-type-card__check {
+  border-color: var(--tone-color);
+  background: var(--tone-color);
+}
+
+/* ── 교란 구역 설정 지도 ── */
+.scenario-zone {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.scenario-zone__stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  cursor: crosshair;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 27px, rgb(23 32 51 / 4%) 27px 28px),
+    repeating-linear-gradient(90deg, transparent 0 27px, rgb(23 32 51 / 4%) 27px 28px),
+    var(--color-surface-muted);
+}
+
+.scenario-zone__stage.is-disabled {
+  cursor: default;
+}
+
+.scenario-zone__stage--jamming {
+  --zone-color: var(--color-danger);
+  --zone-fill: rgb(220 38 38 / 16%);
+}
+.scenario-zone__stage--spoofing {
+  --zone-color: var(--color-ai);
+  --zone-fill: rgb(124 58 237 / 16%);
+}
+.scenario-zone__stage--neutral {
+  --zone-color: var(--color-primary);
+  --zone-fill: rgb(37 99 235 / 14%);
+}
+
+.scenario-zone__hints {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  max-width: 74%;
+  pointer-events: none;
+}
+
+.scenario-zone__hint-top {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 90%);
+  border: 1px solid var(--color-border);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.scenario-zone__caption {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--zone-color);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 작전지역 중심 마커 (빨간 조준점 + 이름 배지, 클릭 통과) */
+.scenario-zone__enemy-crosshair {
+  position: absolute;
+  z-index: 2; /* 조준점은 교란 구역 핀(z-index 3) 아래 레이어 */
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--color-danger);
+  background: radial-gradient(
+    circle,
+    var(--color-danger) 0 3px,
+    rgb(220 38 38 / 14%) 4px
+  );
+  box-shadow: 0 0 0 2px #fff, var(--shadow-sm);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.scenario-zone__enemy-crosshair::before,
+.scenario-zone__enemy-crosshair::after {
+  content: "";
+  position: absolute;
+  background: var(--color-danger);
+}
+
+.scenario-zone__enemy-crosshair::before {
+  left: 50%;
+  top: -6px;
+  width: 2px;
+  height: 34px;
+  transform: translateX(-50%);
+}
+
+.scenario-zone__enemy-crosshair::after {
+  top: 50%;
+  left: -6px;
+  height: 2px;
+  width: 34px;
+  transform: translateY(-50%);
+}
+
+.scenario-zone__enemy-label {
+  position: absolute;
+  z-index: 5; /* 이름 배지는 드론 등 다른 마커 위로 올려 판독성 확보 */
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 0 0 2px #fff, var(--shadow-sm);
+  transform: translate(-50%, 16px);
+  pointer-events: none;
+}
+
+.scenario-zone__reset {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: rgb(255 255 255 / 92%);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.scenario-zone__reset:not(:disabled):hover {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.scenario-zone__reset:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 스푸핑 지도 편집 모드 토글 (좌상단) */
+.scenario-zone__modes {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 6;
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 92%);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.scenario-zone__mode {
+  padding: 4px 11px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scenario-zone__mode.is-active {
+  background: var(--color-ai);
+  color: #fff;
+}
+
+/* 구역 중심 ↔ 허위 좌표 설정 관계선 (이동 경로 아님) */
+.scenario-zone__link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.scenario-zone__link line {
+  stroke: var(--color-ai);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+
+/* 허위 좌표 유령 마커 (실제 드론처럼 보이지 않게 점선 핀) */
+.scenario-zone__spoof {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.scenario-zone__spoof-pin {
+  width: 16px;
+  height: 16px;
+  border: 2px dashed var(--color-ai);
+  border-radius: 50%;
+  background: rgb(124 58 237 / 22%);
+}
+
+.scenario-zone__spoof-badge {
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 90%);
+  border: 1px dashed var(--color-ai);
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: var(--color-ai);
+  white-space: nowrap;
+}
+
+.scenario-zone__circle {
+  position: absolute;
+  z-index: 1;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 2px dashed var(--zone-color);
+  border-radius: 50%;
+  background: var(--zone-fill);
+  pointer-events: none;
+}
+
+.scenario-zone__center {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+.scenario-zone__pin {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--zone-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.scenario-zone__zone-label {
+  margin-left: 2px;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--zone-color);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.scenario-zone__radius-label {
+  margin-left: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 92%);
+  border: 1px solid var(--zone-color);
+  color: var(--zone-color);
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.scenario-zone__drone {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 인접 드론 라벨 겹침 완화: 홀수 인덱스는 이름을 위로 */
+.scenario-zone__drone--alt {
+  flex-direction: column-reverse;
+}
+
+.scenario-zone__drone-dot {
+  width: 13px;
+  height: 13px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.scenario-zone__drone-name {
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 90%);
+  border: 1px solid var(--color-border);
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.scenario-zone__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.scenario-zone__note {
+  color: var(--color-text-subtle);
+}
+
+/* ── 실행 준비 상태 체크리스트 ── */
+.scenario-readiness {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scenario-readiness__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.scenario-readiness__item.is-done {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.scenario-readiness__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-surface-muted);
+  color: var(--color-text-subtle);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.scenario-readiness__item.is-done .scenario-readiness__mark {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+/* ── 활성 시나리오 (레거시 컴포넌트 잔존 스타일) ── */
+.active-scenario-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.active-scenario-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-ai);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.active-scenario-item__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.active-scenario-item__name {
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.active-scenario-item__meta {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+}
+
+/* 배치된 표적 마커 (시뮬레이션 캔버스) */
+.scenario-zone__target {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 6;
+}
+
+.scenario-zone__target:disabled {
+  cursor: default;
+}
+
+.scenario-zone__target-dot {
+  width: 11px;
+  height: 11px;
+  background: #b91c1c;
+  border: 2px solid #fff;
+  transform: rotate(45deg);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 40%);
+}

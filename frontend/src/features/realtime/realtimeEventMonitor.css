@@ -1,0 +1,147 @@
+.realtime-monitor {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  width: min(440px, calc(100vw - 32px));
+  max-height: min(560px, calc(100vh - 32px));
+  overflow: hidden;
+  background: rgb(255 255 255 / 96%);
+  box-shadow: var(--shadow-panel);
+}
+
+.realtime-monitor > .ui-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-height: 460px;
+  overflow: hidden;
+}
+
+.realtime-monitor__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.realtime-monitor__stats div {
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-muted);
+}
+
+.realtime-monitor__stats span,
+.realtime-monitor__types span,
+.realtime-monitor__meta,
+.realtime-monitor__details summary,
+.realtime-monitor__details span {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}
+
+.realtime-monitor__stats strong {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.realtime-monitor__chips,
+.realtime-monitor__types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.realtime-monitor__chip,
+.realtime-monitor__types span {
+  padding: 3px 7px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+}
+
+.realtime-monitor__note {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--color-danger-strong);
+}
+
+.realtime-monitor__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.realtime-monitor__item {
+  padding: 7px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.realtime-monitor__event-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.realtime-monitor__event-head strong,
+.realtime-monitor__time,
+.realtime-monitor__kind {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.realtime-monitor__event-head strong {
+  color: var(--color-text);
+}
+
+.realtime-monitor__time,
+.realtime-monitor__kind {
+  color: var(--color-text-muted);
+}
+
+.realtime-monitor__details {
+  margin-top: 4px;
+}
+
+.realtime-monitor__details pre {
+  max-height: 140px;
+  margin: 5px 0;
+  padding: 6px;
+  overflow: auto;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 720px) {
+  .realtime-monitor {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
+  }
+
+  .realtime-monitor__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

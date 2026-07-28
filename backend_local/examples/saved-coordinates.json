@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "data": {
+    "items": [
+      {
+        "id": "COORD-001",
+        "name": "북동쪽 의심 좌표",
+        "position": {
+          "latitude": 37.568,
+          "longitude": 126.9811,
+          "altitude": null
+        },
+        "radiusM": 500,
+        "description": "시나리오 중심 좌표 후보",
+        "important": true,
+        "pinned": true,
+        "createdAt": "2026-06-30T10:30:00Z",
+        "updatedAt": "2026-06-30T10:30:00Z"
+      }
+    ],
+    "page": {
+      "page": 1,
+      "size": 20,
+      "total": 1
+    }
+  },
+  "message": "요청이 성공했습니다."
+}

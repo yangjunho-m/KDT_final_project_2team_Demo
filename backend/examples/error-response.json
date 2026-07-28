@@ -1,0 +1,9 @@
+{
+  "success": false,
+  "error": {
+    "code": "MODEL_UNAVAILABLE",
+    "message": "Cross-view 모델을 사용할 수 없습니다.",
+    "details": {},
+    "timestamp": "2026-06-30T10:30:00Z"
+  }
+}

@@ -1,0 +1,45 @@
+# Enum 정의 초안
+
+## GNSS
+
+- `NORMAL`
+- `DEGRADED`
+- `JAMMED`
+- `SPOOFED`
+- `LOST`
+
+## INS
+
+- `NORMAL`
+- `DRIFTING`
+- `DEGRADED`
+
+## 경로
+
+- `ON_ROUTE`
+- `DEVIATING`
+- `RECOVERING`
+- `COMPLETED`
+
+## 시나리오
+
+- `DRAFT`
+- `RUNNING`
+- `ENDED`
+- `FAILED`
+
+## 추론
+
+- `QUEUED`
+- `CLAIMED`
+- `RUNNING`
+- `COMPLETED`
+- `FAILED`
+- `LOW_CONFIDENCE`
+- `TIMEOUT`
+
+## 보고
+
+- `NEW`
+- `CONFIRMED`
+- `CLOSED`

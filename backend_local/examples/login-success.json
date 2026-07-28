@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": "USR-001",
+      "username": "admin",
+      "displayName": "시연 관리자",
+      "roles": ["ADMIN"]
+    },
+    "accessToken": "example-token",
+    "tokenType": "bearer",
+    "expiresAt": "2026-06-30T10:30:00Z",
+    "subject": "admin",
+    "redirectPath": "/reports"
+  },
+  "message": "요청이 성공했습니다."
+}

@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+python-multipart
+sqlalchemy
+psycopg[binary]
+httpx
+httpx2
+minio
+faiss-cpu
+numpy
+pillow
+torch
+timm
+pytest

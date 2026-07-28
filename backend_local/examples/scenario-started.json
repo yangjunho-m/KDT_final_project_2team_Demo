@@ -1,0 +1,12 @@
+{
+  "eventId": "EVT-010",
+  "sequence": 10,
+  "eventType": "scenario.started",
+  "timestamp": "2026-06-30T10:30:00Z",
+  "payload": {
+    "id": "SCN-SESSION-001",
+    "scenarioName": "GNSS 재밍 시연",
+    "targetDroneIds": ["DRN-002"],
+    "status": "RUNNING"
+  }
+}

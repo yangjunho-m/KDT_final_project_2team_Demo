@@ -1,0 +1,179 @@
+/* ===== 표적 상세 팝업 (드론 상세 팝업과 동일한 조건: 선택 시에만 표시, 드래그 가능) ===== */
+.target-popup {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 300px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: rgb(255 255 255 / 97%);
+  box-shadow: var(--shadow-modal);
+}
+
+.target-popup__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: move;
+}
+
+.target-popup__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.target-popup__close {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.target-popup__close:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.target-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.target-list__item {
+  padding: 5px 9px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.target-list__item.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+}
+
+.target-info__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 0.82rem;
+}
+
+.target-info__label {
+  color: var(--color-text-muted);
+}
+
+.target-info__value {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ===== 시나리오 배치 표적 목록 ===== */
+.placed-targets {
+  margin: 8px 12px 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 10px;
+  background: var(--color-surface, #fff);
+}
+
+.placed-targets__title {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.placed-targets__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.placed-targets__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.placed-targets__thumb {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  background: #fef2f2;
+  flex: none;
+}
+
+.placed-targets__thumb--empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.placed-targets__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.placed-targets__btn {
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  background: #fff;
+  border-radius: 7px;
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.placed-targets__btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.placed-targets__btn--danger {
+  color: #b91c1c;
+  border-color: #fca5a5;
+}
+
+.target-info__image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  margin-bottom: 8px;
+  background: #0f172a;
+}
