@@ -41,8 +41,8 @@ Nginx
     ↓
 FastAPI Backend
     ├─ PostgreSQL / PostGIS
-    ├─ MinIO
-    ├─ FAISS
+    ├─ MinIO  (storage)
+    ├─ FAISS  (vecter DB)
     └─ AI Model
 ```
 
