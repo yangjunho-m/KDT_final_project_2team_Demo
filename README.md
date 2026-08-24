@@ -4,8 +4,11 @@
 > GNSS Denied Navigation · Drone Surveillance Control System
 
 드론 감시·정찰 데이터를 실시간으로 확인하고, 재밍·스푸핑 상황을 시뮬레이션하는 관제 서비스입니다.
-
-
+<br>
+<br>
+<p><a href="./docs/final-presentation.pdf">PDF 자료 보기</a></p>
+<p><a href="http://140.245.92.139:8000/docs">FastAPI 문서</a></p>
+<br>
 <br>
 <p align="center">
   <img width="900" height="546" alt="1" src="https://github.com/user-attachments/assets/27437de3-8677-410e-a25a-07f34f0f584d" />
@@ -21,17 +24,6 @@
 
 GNSS 재밍·스푸핑 환경에서 드론의 위치정보가 불안정해지는 상황을 시뮬레이션하고,  
 드론 영상과 위성 이미지의 Cross-view Geo-localization 결과를 관제 화면에서 확인할 수 있도록 구현한 프로젝트입니다.
-
-<p>
-  <a href="./docs/final-presentation.pdf">
-    PDF 자료 보기
-  </a>
-</p>
-<p>
-  <a href="http://140.245.92.139:8000/docs">
-    FastAPI 문서
-  </a>
-</p>
 
 ## 시스템 구성
 
