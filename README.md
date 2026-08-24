@@ -11,22 +11,23 @@
   <img src="./docs/관제화면.png" width="900" alt="드론 관제 화면">
 </p>
 
-<p align="center">
-  <a href="./docs/final-presentation.pdf">
-    PDF 자료 보기
-  </a>
-  &nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="http://140.245.92.139:8000/docs">
-    FastAPI 문서
-  </a>
-</p>
-
 ---
 
 ## 프로젝트 소개
 
 GNSS 재밍·스푸핑 환경에서 드론의 위치정보가 불안정해지는 상황을 시뮬레이션하고,  
 드론 영상과 위성 이미지의 Cross-view Geo-localization 결과를 관제 화면에서 확인할 수 있도록 구현한 프로젝트입니다.
+
+<p>
+  <a href="./docs/final-presentation.pdf">
+    PDF 자료 보기
+  </a>
+</p>
+<p>
+  <a href="http://140.245.92.139:8000/docs">
+    FastAPI 문서
+  </a>
+</p>
 
 ## 시스템 구성
 
